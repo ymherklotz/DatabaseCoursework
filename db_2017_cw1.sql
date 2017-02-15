@@ -46,7 +46,15 @@ ORDER BY popularity DESC, p.name
 ;
 
 -- Q6 returns (name,forties,fifties,sixties)
-
+SELECT father
+       COUNT(CASE WHEN dob >= '19400101' AND dob < '19500101'
+                  THEN name ELSE NULL END) AS forties,
+       COUNT(CASE WHEN dob >= '19500101' AND dob < '19600101'
+                  THEN name ELSE NULL END) AS fifties,
+       COUNT(CASE WHEN dob >= '19600101' AND dob < '19700101'
+                  THEN name ELSE NULL END) AS sixties
+FROM person
+GROUP BY father
 ;
 
 
