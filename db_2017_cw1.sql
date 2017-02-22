@@ -72,10 +72,21 @@ ORDER BY name
 
 
 -- Q7 returns (father,mother,child,born)
-
+SELECT father, mother, name AS child,
+       RANK() OVER (PARTITION BY father ORDER BY dob) as born
+FROM person
+WHERE father IS NOT NULL
+AND mother IS NOT NULL
+ORDER BY father, mother, born
 ;
 
 -- Q8 returns (father,mother,male)
-
+SELECT father, mother,
+       ROUND(100 * COUNT(CASE WHEN gender = 'M' THEN name ELSE NULL END) / COUNT(name), 0) as male
+FROM person
+GROUP BY father, mother
+HAVING father IS NOT NULL
+AND mother IS NOT NULL
+ORDER BY father, mother
 ;
 
